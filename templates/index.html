@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mental Health Risk Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <div class="intro">
+        <p class="eyebrow">ML Classification</p>
+        <h1>Mental Health Risk Prediction</h1>
+        <p>Enter psychological indicator scores to estimate a risk class. This tool is educational and is not a clinical diagnosis.</p>
+      </div>
+
+      <form method="post" class="form-grid">
+        {% for feature in features %}
+        <label>
+          <span>{{ feature.replace('_', ' ').title() }}</span>
+          <input type="number" step="0.01" min="0" max="100" name="{{ feature }}" value="{{ values[feature] }}" required>
+        </label>
+        {% endfor %}
+        <button type="submit">Predict Risk</button>
+      </form>
+
+      {% if prediction %}
+      <div class="result">
+        <span>Predicted Mental Health Risk</span>
+        <strong>{{ prediction }}</strong>
+      </div>
+      {% endif %}
+      {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    </section>
+  </main>
+</body>
+</html>
